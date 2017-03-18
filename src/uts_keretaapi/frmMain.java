@@ -66,7 +66,7 @@ public class frmMain extends javax.swing.JFrame {
         rdEksekutif = new javax.swing.JRadioButton();
         duduk = new javax.swing.JComboBox<>();
         wktBerangkat = new javax.swing.JComboBox<>();
-        harga = new javax.swing.JTextField();
+        tanggal = new com.toedter.calendar.JDateChooser();
         jPanel13 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
@@ -252,7 +252,7 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
         jPanel6.add(tgl);
-        tgl.setBounds(400, 180, 230, 40);
+        tgl.setBounds(460, 250, 230, 40);
 
         stasiunTujuan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,14 +302,8 @@ public class frmMain extends javax.swing.JFrame {
         });
         jPanel6.add(wktBerangkat);
         wktBerangkat.setBounds(750, 100, 230, 40);
-
-        harga.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                hargaActionPerformed(evt);
-            }
-        });
-        jPanel6.add(harga);
-        harga.setBounds(470, 250, 230, 40);
+        jPanel6.add(tanggal);
+        tanggal.setBounds(400, 180, 200, 40);
 
         jPanel12.add(jPanel6);
         jPanel6.setBounds(0, 0, 1020, 300);
@@ -461,7 +455,8 @@ public class frmMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
-      
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String tgl = dateFormat.format(tanggal.getDate());
         //String waktu = wktBerangkat.getSelectedItem().toString();
         //String seat = duduk.getSelectedItem().toString();
         String Jns = "";
@@ -471,14 +466,15 @@ public class frmMain extends javax.swing.JFrame {
                 Jns = "Eksekutif";
             }
         
-        if(ID.getText().equals("") || Nama.getText().equals("") || stasiunAwal.getText().equals("") || 
-                stasiunTujuan.getText().equals("") || tgl.getText().equals("")){
+        if(ID.getText().equals(
+          "") || Nama.getText().equals("") || stasiunAwal.getText().equals("") || 
+                stasiunTujuan.getText().equals("")  ){
             JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", "Error", JOptionPane.WARNING_MESSAGE);
         }else {
             
-            String SQL = "INSERT INTO t_pemesanan (id,nama,awal,tujuan,tanggal,jenis,waktu,duduk,harga) "
-                + "VALUES('"+ID.getText()+"','"+Nama.getText()+"','"+stasiunAwal.getText()+"','"+stasiunTujuan.getText()+"',"
-                + "','"+Jns+"','"+wktBerangkat.getSelectedItem()+"','"+duduk.getSelectedItem()+"','"+tgl.getText()+"')";
+            String SQL = "INSERT INTO `t_pemesanan`(`id`, `nama`, `awal`, `tujuan`, `tanggal`, `jenis`, `waktu`, `duduk`, `harga`)"
+                + "VALUES('"+ID.getText()+"','"+Nama.getText()+"','"+stasiunAwal.getText()+"','"+stasiunTujuan.getText()+"','"
+                    +tgl+"','"+Jns+"','"+wktBerangkat.getSelectedItem()+"','"+duduk.getSelectedItem()+"');";
         
         int status = KoneksiDB.execute(SQL);
         if(status == 1){
@@ -545,10 +541,6 @@ public class frmMain extends javax.swing.JFrame {
         tgl.setText("");// TODO add your handling code here:
     }//GEN-LAST:event_bClearActionPerformed
 
-    private void hargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_hargaActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -593,7 +585,6 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JButton bSave;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> duduk;
-    private javax.swing.JTextField harga;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -626,6 +617,7 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JRadioButton rdEksekutif;
     private javax.swing.JTextField stasiunAwal;
     private javax.swing.JTextField stasiunTujuan;
+    private com.toedter.calendar.JDateChooser tanggal;
     private javax.swing.JTable tblData;
     private javax.swing.JTextField tgl;
     private javax.swing.JComboBox<String> wktBerangkat;
@@ -647,7 +639,7 @@ public class frmMain extends javax.swing.JFrame {
                 String waktu = rs.getString(7);
                 String duduk = rs.getString(8);
                 String harga = rs.getString(9);
-                String data[] = {"id","nama","awal","tujuan","tanggal","jenis","waktu","duduk","harga"};
+                String data[] = {id,nama,awal,tujuan,tanggal,jenis,waktu,duduk,harga};
             }
         }catch (SQLException ex) {
                         Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE,null,ex);

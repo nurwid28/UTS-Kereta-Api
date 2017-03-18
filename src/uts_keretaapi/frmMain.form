@@ -382,7 +382,7 @@
                       </Events>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="400" y="180" width="230" height="40"/>
+                          <AbsoluteConstraints x="460" y="250" width="230" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
@@ -484,13 +484,10 @@
                         </Constraint>
                       </Constraints>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="harga">
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hargaActionPerformed"/>
-                      </Events>
+                    <Component class="com.toedter.calendar.JDateChooser" name="tanggal">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                          <AbsoluteConstraints x="470" y="250" width="230" height="40"/>
+                          <AbsoluteConstraints x="400" y="180" width="200" height="40"/>
                         </Constraint>
                       </Constraints>
                     </Component>
