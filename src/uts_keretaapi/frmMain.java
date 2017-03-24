@@ -7,10 +7,12 @@ package uts_keretaapi;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,13 +41,11 @@ public class frmMain extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -59,7 +59,7 @@ public class frmMain extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         ID = new javax.swing.JTextField();
         Nama = new javax.swing.JTextField();
-        tgl = new javax.swing.JTextField();
+        harga = new javax.swing.JTextField();
         stasiunTujuan = new javax.swing.JTextField();
         stasiunAwal = new javax.swing.JTextField();
         rdEkonomi = new javax.swing.JRadioButton();
@@ -76,10 +76,13 @@ public class frmMain extends javax.swing.JFrame {
         bSave = new javax.swing.JButton();
         bClear = new javax.swing.JButton();
         bDelete = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
+        bRefresh = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -102,22 +105,6 @@ public class frmMain extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2);
         jPanel2.setBounds(0, 0, 1040, 10);
-
-        jPanel5.setBackground(new java.awt.Color(255, 153, 0));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1040, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(jPanel5);
-        jPanel5.setBounds(0, 820, 1040, 10);
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
         jPanel8.setLayout(null);
@@ -163,22 +150,6 @@ public class frmMain extends javax.swing.JFrame {
 
         jPanel8.add(jPanel10);
         jPanel10.setBounds(0, 130, 1040, 10);
-
-        jPanel11.setBackground(new java.awt.Color(255, 153, 0));
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1040, Short.MAX_VALUE)
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
-        );
-
-        jPanel8.add(jPanel11);
-        jPanel11.setBounds(0, 820, 1040, 10);
 
         jPanel12.setLayout(null);
 
@@ -246,13 +217,13 @@ public class frmMain extends javax.swing.JFrame {
         jPanel6.add(Nama);
         Nama.setBounds(270, 20, 230, 40);
 
-        tgl.addActionListener(new java.awt.event.ActionListener() {
+        harga.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tglActionPerformed(evt);
+                hargaActionPerformed(evt);
             }
         });
-        jPanel6.add(tgl);
-        tgl.setBounds(460, 250, 230, 40);
+        jPanel6.add(harga);
+        harga.setBounds(460, 250, 230, 40);
 
         stasiunTujuan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,8 +343,13 @@ public class frmMain extends javax.swing.JFrame {
         jPanel7.setBounds(0, 510, 1040, 10);
 
         bPrint.setText("Print");
+        bPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPrintActionPerformed(evt);
+            }
+        });
         jPanel8.add(bPrint);
-        bPrint.setBounds(780, 460, 100, 40);
+        bPrint.setBounds(820, 460, 100, 40);
 
         bSave.setText("Save");
         bSave.addActionListener(new java.awt.event.ActionListener() {
@@ -382,7 +358,7 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
         jPanel8.add(bSave);
-        bSave.setBounds(170, 460, 100, 40);
+        bSave.setBounds(100, 460, 100, 40);
 
         bClear.setText("Clear");
         bClear.addActionListener(new java.awt.event.ActionListener() {
@@ -391,27 +367,16 @@ public class frmMain extends javax.swing.JFrame {
             }
         });
         jPanel8.add(bClear);
-        bClear.setBounds(370, 460, 100, 40);
+        bClear.setBounds(460, 460, 100, 40);
 
         bDelete.setText("Delete");
+        bDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bDeleteActionPerformed(evt);
+            }
+        });
         jPanel8.add(bDelete);
-        bDelete.setBounds(590, 460, 100, 40);
-
-        jPanel3.setBackground(new java.awt.Color(255, 153, 0));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 820, Short.MAX_VALUE)
-        );
-
-        jPanel8.add(jPanel3);
-        jPanel3.setBounds(1030, 0, 10, 820);
+        bDelete.setBounds(640, 460, 100, 40);
 
         jPanel15.setBackground(new java.awt.Color(255, 153, 0));
 
@@ -423,11 +388,11 @@ public class frmMain extends javax.swing.JFrame {
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 820, Short.MAX_VALUE)
+            .addGap(0, 830, Short.MAX_VALUE)
         );
 
         jPanel8.add(jPanel15);
-        jPanel15.setBounds(0, 0, 10, 820);
+        jPanel15.setBounds(0, 0, 10, 830);
 
         tblData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -443,15 +408,66 @@ public class frmMain extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblData);
 
         jPanel8.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 520, 1020, 240);
+        jScrollPane1.setBounds(20, 530, 1010, 230);
+
+        bRefresh.setText("Refresh");
+        bRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bRefreshActionPerformed(evt);
+            }
+        });
+        jPanel8.add(bRefresh);
+        bRefresh.setBounds(270, 460, 100, 40);
+
+        jButton1.setText("exit");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButton1);
+        jButton1.setBounds(900, 780, 110, 30);
 
         jPanel1.add(jPanel8);
-        jPanel8.setBounds(0, 0, 1040, 830);
+        jPanel8.setBounds(0, 0, 1040, 840);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1040, 830);
 
-        pack();
+        jPanel3.setBackground(new java.awt.Color(255, 153, 0));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 840, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel3);
+        jPanel3.setBounds(1040, 0, 10, 840);
+
+        jPanel11.setBackground(new java.awt.Color(255, 153, 0));
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1040, Short.MAX_VALUE)
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel11);
+        jPanel11.setBounds(0, 830, 1040, 10);
+
+        setSize(new java.awt.Dimension(1069, 888));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
@@ -468,18 +484,17 @@ public class frmMain extends javax.swing.JFrame {
         
         if(ID.getText().equals(
           "") || Nama.getText().equals("") || stasiunAwal.getText().equals("") || 
-                stasiunTujuan.getText().equals("")  ){
+                stasiunTujuan.getText().equals("") || harga.getText().equals("")  ){
             JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", "Error", JOptionPane.WARNING_MESSAGE);
         }else {
             
-            String SQL = "INSERT INTO `t_pemesanan`(`id`, `nama`, `awal`, `tujuan`, `tanggal`, `jenis`, `waktu`, `duduk`, `harga`)"
-                + "VALUES('"+ID.getText()+"','"+Nama.getText()+"','"+stasiunAwal.getText()+"','"+stasiunTujuan.getText()+"','"
-                    +tgl+"','"+Jns+"','"+wktBerangkat.getSelectedItem()+"','"+duduk.getSelectedItem()+"');";
+            String SQL = "INSERT INTO `t_pemesanan`(`id`, `nama`, `awal`, `tujuan`, `tanggal`, `jenis`, `waktu`, `duduk`, `harga`) "
+                    + "VALUES('"+ID.getText()+"','"+Nama.getText()+"','"+stasiunAwal.getText()+"','"+stasiunTujuan.getText()+"','"+tgl+"','"+Jns+"','"+wktBerangkat.getSelectedItem()+"','"+duduk.getSelectedItem()+"','"+harga.getText()+"')";
         
         int status = KoneksiDB.execute(SQL);
         if(status == 1){
             JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-            //selectData();
+            selectData();
         } else{
             JOptionPane.showMessageDialog(this, "Data gagal ditambahkan", "Gagal", JOptionPane.WARNING_MESSAGE);
         }
@@ -495,9 +510,9 @@ public class frmMain extends javax.swing.JFrame {
 
     private void rdEkonomiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdEkonomiActionPerformed
         if(rdEkonomi.isSelected()) {
-            tgl.setText("15.000");
+            harga.setText("15.000");
         } else {
-            tgl.setText("85.000");
+            harga.setText("85.000");
         }        // TODO add your handling code here:
     }//GEN-LAST:event_rdEkonomiActionPerformed
 
@@ -509,12 +524,12 @@ public class frmMain extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_stasiunTujuanActionPerformed
 
-    private void tglActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tglActionPerformed
+    private void hargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hargaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tglActionPerformed
+    }//GEN-LAST:event_hargaActionPerformed
 
     private void NamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NamaActionPerformed
-        // TODO add your handling code here:
+                // TODO add your handling code here:
     }//GEN-LAST:event_NamaActionPerformed
 
     private void IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDActionPerformed
@@ -523,9 +538,9 @@ public class frmMain extends javax.swing.JFrame {
 
     private void rdEksekutifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdEksekutifActionPerformed
              if(rdEksekutif.isSelected()) {
-                 tgl.setText("85.000");
+                 harga.setText("85.000");
              } else {
-                 tgl.setText("15.000");
+                 harga.setText("15.000");
              }  // TODO add your handling code here:
     }//GEN-LAST:event_rdEksekutifActionPerformed
 
@@ -534,12 +549,48 @@ public class frmMain extends javax.swing.JFrame {
         ID.setText("");
         stasiunAwal.setText("");
         stasiunTujuan.setText("");
-        tgl.setText("");
+        harga.setText("");
         buttonGroup1.clearSelection();
         wktBerangkat.setSelectedIndex(0);
         duduk.setSelectedIndex(0);
-        tgl.setText("");// TODO add your handling code here:
+        harga.setText("");// TODO add your handling code here:
     }//GEN-LAST:event_bClearActionPerformed
+
+    private void bRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRefreshActionPerformed
+        selectData();        // TODO add your handling code here:
+    }//GEN-LAST:event_bRefreshActionPerformed
+
+    private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
+        int baris = tblData.getSelectedRow();
+        if(baris != 1){
+            String id = tblData.getValueAt(baris, 0).toString();
+            String SQL = "DELETE FROM t_pemesanan WHERE id = '"+id+"'";
+            int status = KoneksiDB.execute(SQL);
+            
+            if (status == 1){
+                JOptionPane.showMessageDialog(this, "Data berhasil dihapus","Sukses", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Data Gagal Dihapus", "Gagal", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih Baris Data Terlebih dahulu", "Error", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_bDeleteActionPerformed
+
+    private void bPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPrintActionPerformed
+        // TODO add your handling code here:
+        MessageFormat header = new MessageFormat("Pemesanan Tiket Kereta Api");
+        MessageFormat footer = new MessageFormat("Page (0, number,integer)");
+        try {
+            tblData.print(JTable.PrintMode.FIT_WIDTH, header, footer, true, null, true, null);
+        } catch (java.awt.print.PrinterException e){
+            System.err.format("Cannot print %s%n", e.getMessage());
+        }
+    }//GEN-LAST:event_bPrintActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -582,9 +633,12 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JButton bClear;
     private javax.swing.JButton bDelete;
     private javax.swing.JButton bPrint;
+    private javax.swing.JButton bRefresh;
     private javax.swing.JButton bSave;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> duduk;
+    private javax.swing.JTextField harga;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -607,7 +661,6 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -619,7 +672,6 @@ public class frmMain extends javax.swing.JFrame {
     private javax.swing.JTextField stasiunTujuan;
     private com.toedter.calendar.JDateChooser tanggal;
     private javax.swing.JTable tblData;
-    private javax.swing.JTextField tgl;
     private javax.swing.JComboBox<String> wktBerangkat;
     // End of variables declaration//GEN-END:variables
 
@@ -635,11 +687,38 @@ public class frmMain extends javax.swing.JFrame {
                 String awal = rs.getString(3);
                 String tujuan = rs.getString(4);
                 String tanggal = rs.getString(5);
-                String jenis = rs.getString(6);
-                String waktu = rs.getString(7);
-                String duduk = rs.getString(8);
+                
+                String jenis = "";
+                if("Ekonomi-AC".equals(rs.getString(6))) {
+                jenis="Ekonomi-AC";
+                } else {
+                jenis = "Eksekutif";
+                }
+                String waktu = "";
+                if(rs.getString(7).equals("07.10")){
+                    waktu = "07.10";
+                }else if(rs.getString(7).equals("10.30")){
+                    waktu = "10.30";
+                }else if(rs.getString(7).equals("14.45")){
+                    waktu = "14.45";
+                }else if(rs.getString(7).equals("18.30")){
+                    waktu = "18.30";
+                }
+                String duduk = "";
+                if(rs.getString(8).equals("1")){
+                    duduk = "1";
+                }else if(rs.getString(8).equals("2")){
+                    duduk = "2";
+                }else if(rs.getString(8).equals("3")){
+                    duduk = "3";
+                }else if(rs.getString(8).equals("4")){
+                    duduk = "4";
+                }else if(rs.getString(8).equals("5")){
+                    duduk = "5";
+                }
                 String harga = rs.getString(9);
                 String data[] = {id,nama,awal,tujuan,tanggal,jenis,waktu,duduk,harga};
+                dtm.addRow(data);
             }
         }catch (SQLException ex) {
                         Logger.getLogger(frmMain.class.getName()).log(Level.SEVERE,null,ex);
